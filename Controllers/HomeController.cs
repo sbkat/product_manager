@@ -103,9 +103,13 @@ namespace wedding_planner.Controllers
         return View();
     }    
     [HttpPost("wedding")]
-    public IActionResult SubmitNewWedding()
+    public IActionResult SubmitNewWedding(Wedding newWedding)
     {
-        return RedirectToAction("Dashboard");
+        if(ModelState.IsValid)
+        {
+            return RedirectToAction("Dashboard");
+        }
+        return View("NewWedding");
     }
     public IActionResult Logout()
     {

@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System;
+using System.Collections.Generic;
 
 namespace wedding_planner.Models
 {
@@ -25,5 +26,6 @@ namespace wedding_planner.Models
         public string Address { get; set; }
         public DateTime CreatedAt {get;set;} = DateTime.Now;
         public DateTime UpdatedAt {get;set;} = DateTime.Now;
+        public List<Event> Events { get; set; }
     }
 }
