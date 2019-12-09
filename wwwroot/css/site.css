@@ -68,3 +68,12 @@ a {
   float: right;
   margin: 20px;
 }
+
+input {
+  display: block;
+  margin-bottom: 5px;
+}
+
+html {
+  padding-top: 5vh;
+}

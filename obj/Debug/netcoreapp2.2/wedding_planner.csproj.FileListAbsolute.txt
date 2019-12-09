@@ -17,7 +17,6 @@ C:\Users\Kathy\Desktop\Coding\Coding Dojo\csharp\wedding_planner\obj\Debug\netco
 C:\Users\Kathy\Desktop\Coding\Coding Dojo\csharp\wedding_planner\obj\Debug\netcoreapp2.2\Razor\Views\Home\Index.g.cshtml.cs
 C:\Users\Kathy\Desktop\Coding\Coding Dojo\csharp\wedding_planner\obj\Debug\netcoreapp2.2\Razor\Views\Home\Login.g.cshtml.cs
 C:\Users\Kathy\Desktop\Coding\Coding Dojo\csharp\wedding_planner\obj\Debug\netcoreapp2.2\Razor\Views\Home\RegisterPartial.g.cshtml.cs
-C:\Users\Kathy\Desktop\Coding\Coding Dojo\csharp\wedding_planner\obj\Debug\netcoreapp2.2\Razor\Views\Home\Success.g.cshtml.cs
 C:\Users\Kathy\Desktop\Coding\Coding Dojo\csharp\wedding_planner\obj\Debug\netcoreapp2.2\Razor\Views\Shared\Error.g.cshtml.cs
 C:\Users\Kathy\Desktop\Coding\Coding Dojo\csharp\wedding_planner\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_CookieConsentPartial.g.cshtml.cs
 C:\Users\Kathy\Desktop\Coding\Coding Dojo\csharp\wedding_planner\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_Layout.g.cshtml.cs
@@ -30,3 +29,5 @@ C:\Users\Kathy\Desktop\Coding\Coding Dojo\csharp\wedding_planner\obj\Debug\netco
 C:\Users\Kathy\Desktop\Coding\Coding Dojo\csharp\wedding_planner\obj\Debug\netcoreapp2.2\wedding_planner.dll
 C:\Users\Kathy\Desktop\Coding\Coding Dojo\csharp\wedding_planner\obj\Debug\netcoreapp2.2\wedding_planner.pdb
 C:\Users\Kathy\Desktop\Coding\Coding Dojo\csharp\wedding_planner\obj\Debug\netcoreapp2.2\wedding_planner.csproj.CopyComplete
+C:\Users\Kathy\Desktop\Coding\Coding Dojo\csharp\wedding_planner\obj\Debug\netcoreapp2.2\Razor\Views\Home\Dashboard.g.cshtml.cs
+C:\Users\Kathy\Desktop\Coding\Coding Dojo\csharp\wedding_planner\obj\Debug\netcoreapp2.2\Razor\Views\Home\NewWedding.g.cshtml.cs

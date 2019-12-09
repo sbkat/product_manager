@@ -40,7 +40,7 @@ namespace wedding_planner.Controllers
                 dbContext.Users.Add(newUser);
                 dbContext.SaveChanges();
                 HttpContext.Session.SetString("User", newUser.email);
-                return RedirectToAction("Success");
+                return RedirectToAction("Dashboard");
             }
         }
         else
@@ -71,7 +71,7 @@ namespace wedding_planner.Controllers
                 else
                 {
                     HttpContext.Session.SetString("User", existingUser.email);
-                    return RedirectToAction("Success");
+                    return RedirectToAction("Dashboard");
                 }
             }
             else
@@ -85,8 +85,8 @@ namespace wedding_planner.Controllers
             return View("Login");
         }
     }
-    [HttpGet("success")]
-    public IActionResult Success()
+    [HttpGet("Dashboard")]
+    public IActionResult Dashboard()
     {
         if(HttpContext.Session.GetString("User")==null)
         {
@@ -96,6 +96,16 @@ namespace wedding_planner.Controllers
         {
             return View();
         }
+    }    
+    [HttpGet("wedding")]
+    public IActionResult NewWedding()
+    {
+        return View();
+    }    
+    [HttpPost("wedding")]
+    public IActionResult SubmitNewWedding()
+    {
+        return RedirectToAction("Dashboard");
     }
     public IActionResult Logout()
     {
