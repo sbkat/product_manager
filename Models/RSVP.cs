@@ -1,12 +1,16 @@
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace wedding_planner.Models
 {
-    public class Event
+    public class RSVP
     {
-        public int EventId { get; set; }
+        public int RSVPId { get; set; }
         public int UserId { get; set; }
         public int WeddingId { get; set; }
         public bool IsGoing { get; set; }
-        public User User { get; set; }
+        [NotMapped]
+        public List<User> Users { get; set; }
         public Wedding Wedding { get; set; }
     }
 }

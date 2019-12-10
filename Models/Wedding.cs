@@ -26,6 +26,8 @@ namespace wedding_planner.Models
         public string Address { get; set; }
         public DateTime CreatedAt {get;set;} = DateTime.Now;
         public DateTime UpdatedAt {get;set;} = DateTime.Now;
-        public List<Event> Events { get; set; }
+        [NotMapped]
+        public User UserCreated { get; set; }
+        public List<RSVP> RSVPs { get; set; }
     }
 }

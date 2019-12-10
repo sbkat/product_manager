@@ -35,6 +35,6 @@ namespace wedding_planner.Models
         public string confirmPassword { get; set; }
         public DateTime CreatedAt {get;set;} = DateTime.Now;
         public DateTime UpdatedAt {get;set;} = DateTime.Now;
-        public List<Event> Events { get; set; }
+        public List<RSVP> RSVPs { get; set; }
     }
 }

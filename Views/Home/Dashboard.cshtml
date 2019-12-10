@@ -1,3 +1,5 @@
+@model List<Wedding>
+
 <div> 
     <h1 class="display-4">Welcome to the Wedding Planner ~</h1>
     <a asp-action="Logout" asp-controller="home">Logout</a>
@@ -7,17 +9,25 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th scope="col">Wedding</th>
-                <th scope="col">Date</th>
-                <th scope="col">Guest</th>
+                <th scope="col">Lovebirds</th>
+                <th scope="col">Date of Wedding</th>
+                <th scope="col">Guests</th>
                 <th scope="col">Action</th>
 
             </tr>
         </thead>
         <tbody>
+            @foreach(var wedding in Model)
+            {
             <tr>
-                <td></td>
+                <td><a href="/wedding/@wedding.WeddingId" class="actionLinks">@wedding.WedderOne & @wedding.WedderTwo</a></td>
+                <td>@wedding.Date.ToString("MM/dd/yyyy")</td>
+                <td>@wedding.RSVPs.Count</td>
+                <td>
+                    <a asp-action="Delete" asp-controller="home" asp-route-id="@wedding.WeddingId" class="actionLinks">Delete</a>
+                </td>
             </tr>
+            }
         </tbody>
     </table>
 </div>

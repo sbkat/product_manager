@@ -71,6 +71,7 @@ namespace wedding_planner.Controllers
                 else
                 {
                     HttpContext.Session.SetString("User", existingUser.email);
+                    HttpContext.Session.SetInt32("UserId", userInDb.UserId);
                     return RedirectToAction("Dashboard");
                 }
             }
@@ -94,7 +95,11 @@ namespace wedding_planner.Controllers
         }
         else
         {
-            return View();
+            List<Wedding> allWeddings = dbContext.Weddings
+                .Include(wedding => wedding.RSVPs)
+                // .ThenInclude(rsvp => rsvp.Users)
+                .OrderBy(w => w.Date).ToList();
+            return View(allWeddings);
         }
     }    
     [HttpGet("wedding")]
@@ -107,9 +112,57 @@ namespace wedding_planner.Controllers
     {
         if(ModelState.IsValid)
         {
-            return RedirectToAction("Dashboard");
+            if(newWedding.Date > DateTime.Now)
+            {
+                User thisUser = dbContext.Users.FirstOrDefault(user => user.UserId == HttpContext.Session.GetInt32("UserId"));
+                newWedding.UserCreated = thisUser;
+                dbContext.Add(newWedding);
+                dbContext.SaveChanges();
+                return RedirectToAction("Dashboard");
+            }
+            else
+            {
+                ModelState.AddModelError("Date", "Wedding date must be chosen for the future.");
+                return View("NewWedding");
+            }
         }
         return View("NewWedding");
+    }
+    [HttpGet("wedding/{id}")]
+    public IActionResult WeddingDetails(int id)
+    {
+        Wedding thisWedding = dbContext.Weddings.FirstOrDefault(wedding => wedding.WeddingId == id);
+        return View(new RSVP{Wedding = thisWedding});
+    }
+    [HttpPost("RSVP")]
+    public IActionResult RSVP(int id, bool going) 
+    {
+        if(HttpContext.Session.GetString("User")==null)
+        {
+            return RedirectToAction("Index");
+        }
+        RSVP isGoing = dbContext.RSVPs.Where(r => r.RSVPId == id).FirstOrDefault(user => user.UserId == HttpContext.Session.GetInt32("UserId"));
+        if(isGoing==null)
+        {
+            RSVP newRSVP = new RSVP();
+            newRSVP.IsGoing = going;
+            newRSVP.RSVPId = id;
+            newRSVP.UserId = (int)HttpContext.Session.GetInt32("UserId");
+            dbContext.Add(newRSVP);
+            dbContext.SaveChanges();
+            return RedirectToAction("Dashboard");
+        }
+        if(isGoing.IsGoing == going)
+        {
+            dbContext.Remove(isGoing);
+        }
+        else
+        {
+            isGoing.IsGoing = going;
+            dbContext.Update(isGoing);
+        }
+        dbContext.SaveChanges();
+        return RedirectToAction("Dashboard");
     }
     public IActionResult Logout()
     {
@@ -121,6 +174,13 @@ namespace wedding_planner.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        public IActionResult Delete(int id)
+        {
+            Wedding thisWedding = dbContext.Weddings.FirstOrDefault(wedding => wedding.WeddingId == id);
+            dbContext.Weddings.Remove(thisWedding);
+            dbContext.SaveChanges();
+            return RedirectToAction("Dashboard");
         }
     }
 }

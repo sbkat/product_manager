@@ -7,7 +7,7 @@
 
 <div>
     <h1>Plan your wedding</h1>
-<form asp-action="SubmitNewWedding" asp-controller="Home" method="post">
+    <form asp-action="SubmitNewWedding" asp-controller="Home" method="post">
     <span asp-validation-for="WedderOne"></span>
     <label asp-for="WedderOne"></label>
     <input asp-for="WedderOne">
@@ -23,7 +23,7 @@
     <span asp-validation-for="Address"></span>
     <label asp-for="Address"></label>
     <input asp-for="Address">
-
+    <br>
     <button class="btn btn-info">Create Wedding!</button>
 </form>
 </div>

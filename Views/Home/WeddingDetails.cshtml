@@ -1,0 +1,14 @@
+@model RSVP
+
+<div>
+    <a asp-action="Dashboard" asp-controller="home">Dashboard</a>
+    <a asp-action="Logout" asp-controller="home">Logout</a>
+</div>
+
+<div>
+    <h1 class="display-4">@Model.Wedding.WedderOne & @Model.Wedding.WedderTwo's Wedding!</h1>
+    <p class="lead">Date: @Model.Wedding.Date.ToString("MM/dd/yyyy")</p>
+    <p class="lead">Guests:</p>
+
+</div>
+

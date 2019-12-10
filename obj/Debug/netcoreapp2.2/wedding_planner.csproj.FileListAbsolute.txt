@@ -31,3 +31,4 @@ C:\Users\Kathy\Desktop\Coding\Coding Dojo\csharp\wedding_planner\obj\Debug\netco
 C:\Users\Kathy\Desktop\Coding\Coding Dojo\csharp\wedding_planner\obj\Debug\netcoreapp2.2\wedding_planner.csproj.CopyComplete
 C:\Users\Kathy\Desktop\Coding\Coding Dojo\csharp\wedding_planner\obj\Debug\netcoreapp2.2\Razor\Views\Home\Dashboard.g.cshtml.cs
 C:\Users\Kathy\Desktop\Coding\Coding Dojo\csharp\wedding_planner\obj\Debug\netcoreapp2.2\Razor\Views\Home\NewWedding.g.cshtml.cs
+C:\Users\Kathy\Desktop\Coding\Coding Dojo\csharp\wedding_planner\obj\Debug\netcoreapp2.2\Razor\Views\Home\WeddingDetails.g.cshtml.cs

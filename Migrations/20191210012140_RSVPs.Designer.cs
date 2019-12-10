@@ -9,8 +9,8 @@ using wedding_planner.Models;
 namespace wedding_planner.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20191209231859_Events")]
-    partial class Events
+    [Migration("20191210012140_RSVPs")]
+    partial class RSVPs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -19,22 +19,24 @@ namespace wedding_planner.Migrations
                 .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("wedding_planner.Models.Event", b =>
+            modelBuilder.Entity("wedding_planner.Models.RSVP", b =>
                 {
-                    b.Property<int>("EventId")
+                    b.Property<int>("RSVPId")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("IsGoing");
 
                     b.Property<int>("UserId");
 
                     b.Property<int>("WeddingId");
 
-                    b.HasKey("EventId");
+                    b.HasKey("RSVPId");
 
                     b.HasIndex("UserId");
 
                     b.HasIndex("WeddingId");
 
-                    b.ToTable("Events");
+                    b.ToTable("RSVPs");
                 });
 
             modelBuilder.Entity("wedding_planner.Models.User", b =>
@@ -88,15 +90,15 @@ namespace wedding_planner.Migrations
                     b.ToTable("Weddings");
                 });
 
-            modelBuilder.Entity("wedding_planner.Models.Event", b =>
+            modelBuilder.Entity("wedding_planner.Models.RSVP", b =>
                 {
                     b.HasOne("wedding_planner.Models.User", "User")
-                        .WithMany("Events")
+                        .WithMany("RSVPs")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("wedding_planner.Models.Wedding", "Wedding")
-                        .WithMany("Events")
+                        .WithMany("RSVPs")
                         .HasForeignKey("WeddingId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
