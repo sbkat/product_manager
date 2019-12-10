@@ -57,6 +57,7 @@ body {
 
 /* body  */
 span {
+  display: block;
   color: red;
 }
 
@@ -69,11 +70,14 @@ a {
   margin: 20px;
 }
 
-input {
-  display: block;
-  margin-bottom: 5px;
-}
 
 html {
   padding-top: 5vh;
+}
+
+.actionLinks {
+  float: left;
+  vertical-align: top;
+  padding: 0px;
+  margin: 0px;
 }
