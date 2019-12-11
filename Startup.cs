@@ -26,6 +26,7 @@ namespace wedding_planner
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSession();
+            services.AddHttpContextAccessor();
             services.AddDbContext<MyContext>(options => options.UseMySql(Configuration["DBInfo:ConnectionString"]));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

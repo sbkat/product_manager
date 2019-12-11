@@ -41,22 +41,18 @@
                     }
                     else
                     {
-                        foreach(var rsvp in wedding.RSVPs)
+                        var RsvpInWedding = wedding.RSVPs.Where(w => w.WeddingId == wedding.WeddingId).FirstOrDefault(u => u.UserId == HttpContextAccessor.HttpContext.Session.GetInt32("UserId"));
+                        if(RsvpInWedding != null)
                         {
-                            if(rsvp.WeddingId == wedding.WeddingId && rsvp.UserId == ViewBag.UserId)
-                            {
-                                <form method="post" asp-action="RSVP" asp-controller="home" asp-route-id="@wedding.WeddingId">
-                                    <input type="submit" class="btn btn-primary" value="Un-RSVP">
-                                </form>
-                                break;
-                            }
-                            else
-                            {
-                                <form method="post" asp-action="RSVP" asp-controller="home" asp-route-id="@wedding.WeddingId">
-                                    <input type="submit" class="btn btn-success" value="RSVP">
-                                </form>
-                                break;
-                            }
+                            <form method="post" asp-action="RSVP" asp-controller="home" asp-route-id="@wedding.WeddingId">
+                                <input type="submit" class="btn btn-primary" value="Un-RSVP">
+                            </form>
+                        }
+                        else
+                        {
+                            <form method="post" asp-action="RSVP" asp-controller="home" asp-route-id="@wedding.WeddingId">
+                                <input type="submit" class="btn btn-success" value="RSVP">
+                            </form>
                         }
                     }
                 }
