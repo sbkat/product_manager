@@ -25,7 +25,7 @@
                 <td>@wedding.RSVPs.Count</td>
                 <td>
                 
-                @if(wedding.UserId == ViewBag.UserId)
+                @if(wedding.UserId == HttpContextAccessor.HttpContext.Session.GetInt32("UserId"))
                 {
                     <form method="post" asp-action="Delete" asp-controller="home" asp-route-id="@wedding.WeddingId">
                         <input type="submit" class="btn btn-danger" value="Delete">

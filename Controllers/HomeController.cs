@@ -100,7 +100,6 @@ namespace wedding_planner.Controllers
                 .Include(wedding => wedding.RSVPs)
                 .ThenInclude(rsvp => rsvp.Guest)
                 .OrderBy(w => w.Date).ToList();
-            ViewBag.UserId = HttpContext.Session.GetInt32("UserId");
             return View(allWeddings);
         }
     }    
