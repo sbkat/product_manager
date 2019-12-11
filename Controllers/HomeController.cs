@@ -40,6 +40,7 @@ namespace wedding_planner.Controllers
                 dbContext.Users.Add(newUser);
                 dbContext.SaveChanges();
                 HttpContext.Session.SetString("User", newUser.email);
+                HttpContext.Session.SetInt32("UserId", newUser.UserId);
                 return RedirectToAction("Dashboard");
             }
         }
@@ -97,8 +98,9 @@ namespace wedding_planner.Controllers
         {
             List<Wedding> allWeddings = dbContext.Weddings
                 .Include(wedding => wedding.RSVPs)
-                // .ThenInclude(rsvp => rsvp.Users)
+                .ThenInclude(rsvp => rsvp.Guest)
                 .OrderBy(w => w.Date).ToList();
+            ViewBag.UserId = HttpContext.Session.GetInt32("UserId");
             return View(allWeddings);
         }
     }    
@@ -108,15 +110,16 @@ namespace wedding_planner.Controllers
         return View();
     }    
     [HttpPost("wedding")]
-    public IActionResult SubmitNewWedding(Wedding newWedding)
+    public IActionResult SubmitNewWedding(RSVP newWedding)
     {
         if(ModelState.IsValid)
         {
-            if(newWedding.Date > DateTime.Now)
+            if(newWedding.Wedding.Date > DateTime.Now)
             {
                 User thisUser = dbContext.Users.FirstOrDefault(user => user.UserId == HttpContext.Session.GetInt32("UserId"));
-                newWedding.UserCreated = thisUser;
-                dbContext.Add(newWedding);
+                newWedding.Wedding.Creator = thisUser;
+                newWedding.Wedding.UserId = thisUser.UserId;
+                dbContext.Add(newWedding.Wedding);
                 dbContext.SaveChanges();
                 return RedirectToAction("Dashboard");
             }
@@ -131,56 +134,55 @@ namespace wedding_planner.Controllers
     [HttpGet("wedding/{id}")]
     public IActionResult WeddingDetails(int id)
     {
-        Wedding thisWedding = dbContext.Weddings.FirstOrDefault(wedding => wedding.WeddingId == id);
-        return View(new RSVP{Wedding = thisWedding});
+        Wedding thisWedding = dbContext.Weddings
+            .Include(wedding => wedding.RSVPs)
+            .ThenInclude(rsvp => rsvp.Guest)
+            .FirstOrDefault(wedding => wedding.WeddingId == id);
+        return View(thisWedding);
     }
     [HttpPost("RSVP")]
-    public IActionResult RSVP(int id, bool going) 
+    public IActionResult RSVP(int id) 
     {
         if(HttpContext.Session.GetString("User")==null)
         {
             return RedirectToAction("Index");
         }
-        RSVP isGoing = dbContext.RSVPs.Where(r => r.RSVPId == id).FirstOrDefault(user => user.UserId == HttpContext.Session.GetInt32("UserId"));
-        if(isGoing==null)
+        RSVP GuestRsvp = dbContext.RSVPs.Where(r => r.WeddingId == id).FirstOrDefault(user => user.UserId == HttpContext.Session.GetInt32("UserId"));
+        User thisUser = dbContext.Users.FirstOrDefault(user => user.UserId == HttpContext.Session.GetInt32("UserId")); 
+        if(GuestRsvp==null)
         {
             RSVP newRSVP = new RSVP();
-            newRSVP.IsGoing = going;
-            newRSVP.RSVPId = id;
+            newRSVP.WeddingId = id;
             newRSVP.UserId = (int)HttpContext.Session.GetInt32("UserId");
+            newRSVP.Guest = thisUser;
             dbContext.Add(newRSVP);
             dbContext.SaveChanges();
             return RedirectToAction("Dashboard");
         }
-        if(isGoing.IsGoing == going)
-        {
-            dbContext.Remove(isGoing);
-        }
         else
         {
-            isGoing.IsGoing = going;
-            dbContext.Update(isGoing);
+            dbContext.RSVPs.Remove(GuestRsvp);
+            dbContext.SaveChanges();
+            return RedirectToAction("Dashboard");
         }
-        dbContext.SaveChanges();
-        return RedirectToAction("Dashboard");
     }
     public IActionResult Logout()
     {
         HttpContext.Session.Clear();
         return RedirectToAction("Index");
     }
+    public IActionResult Delete(int id)
+    {
+        Wedding thisWedding = dbContext.Weddings.FirstOrDefault(wedding => wedding.WeddingId == id);
+        dbContext.Weddings.Remove(thisWedding);
+        dbContext.SaveChanges();
+        return RedirectToAction("Dashboard");
+    }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-        public IActionResult Delete(int id)
-        {
-            Wedding thisWedding = dbContext.Weddings.FirstOrDefault(wedding => wedding.WeddingId == id);
-            dbContext.Weddings.Remove(thisWedding);
-            dbContext.SaveChanges();
-            return RedirectToAction("Dashboard");
         }
     }
 }

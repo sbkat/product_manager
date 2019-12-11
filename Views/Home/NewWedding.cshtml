@@ -1,4 +1,4 @@
-@model Wedding
+@model RSVP
 
 <div>
     <a asp-action="Dashboard" asp-controller="home">Dashboard</a>
@@ -8,22 +8,22 @@
 <div>
     <h1>Plan your wedding</h1>
     <form asp-action="SubmitNewWedding" asp-controller="Home" method="post">
-    <span asp-validation-for="WedderOne"></span>
-    <label asp-for="WedderOne"></label>
-    <input asp-for="WedderOne">
+        <span asp-validation-for="@Model.Wedding.WedderOne"></span>
+        <label asp-for="@Model.Wedding.WedderOne"></label>
+        <input asp-for="@Model.Wedding.WedderOne">
 
-    <span asp-validation-for="WedderTwo"></span>
-    <label asp-for="WedderTwo"></label>
-    <input asp-for="WedderTwo">
-    
-    <span asp-validation-for="Date"></span>
-    <label asp-for="Date"></label>
-    <input asp-for="Date">
+        <span asp-validation-for="@Model.Wedding.WedderTwo"></span>
+        <label asp-for="@Model.Wedding.WedderTwo"></label>
+        <input asp-for="@Model.Wedding.WedderTwo">
+        
+        <span asp-validation-for="@Model.Wedding.Date"></span>
+        <label asp-for="@Model.Wedding.Date"></label>
+        <input asp-for="@Model.Wedding.Date">
 
-    <span asp-validation-for="Address"></span>
-    <label asp-for="Address"></label>
-    <input asp-for="Address">
-    <br>
-    <button class="btn btn-info">Create Wedding!</button>
-</form>
+        <span asp-validation-for="@Model.Wedding.Address"></span>
+        <label asp-for="@Model.Wedding.Address"></label>
+        <input asp-for="@Model.Wedding.Address">
+        <br>
+        <button class="btn btn-info">Create Wedding!</button>
+    </form>
 </div>

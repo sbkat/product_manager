@@ -22,8 +22,6 @@ namespace wedding_planner.Migrations
                     b.Property<int>("RSVPId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<bool>("IsGoing");
-
                     b.Property<int>("UserId");
 
                     b.Property<int>("WeddingId");
@@ -77,6 +75,8 @@ namespace wedding_planner.Migrations
 
                     b.Property<DateTime>("UpdatedAt");
 
+                    b.Property<int>("UserId");
+
                     b.Property<string>("WedderOne")
                         .IsRequired();
 
@@ -85,19 +85,29 @@ namespace wedding_planner.Migrations
 
                     b.HasKey("WeddingId");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("Weddings");
                 });
 
             modelBuilder.Entity("wedding_planner.Models.RSVP", b =>
                 {
-                    b.HasOne("wedding_planner.Models.User", "User")
-                        .WithMany("RSVPs")
+                    b.HasOne("wedding_planner.Models.User", "Guest")
+                        .WithMany("WeddingsToAttend")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("wedding_planner.Models.Wedding", "Wedding")
                         .WithMany("RSVPs")
                         .HasForeignKey("WeddingId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("wedding_planner.Models.Wedding", b =>
+                {
+                    b.HasOne("wedding_planner.Models.User", "Creator")
+                        .WithMany("WeddingsCreated")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

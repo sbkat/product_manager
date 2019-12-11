@@ -24,7 +24,42 @@
                 <td>@wedding.Date.ToString("MM/dd/yyyy")</td>
                 <td>@wedding.RSVPs.Count</td>
                 <td>
-                    <a asp-action="Delete" asp-controller="home" asp-route-id="@wedding.WeddingId" class="actionLinks">Delete</a>
+                
+                @if(wedding.UserId == ViewBag.UserId)
+                {
+                    <form method="post" asp-action="Delete" asp-controller="home" asp-route-id="@wedding.WeddingId">
+                        <input type="submit" class="btn btn-danger" value="Delete">
+                    </form>
+                }
+                else
+                {
+                    if(wedding.RSVPs.Count == 0)
+                    {
+                        <form method="post" asp-action="RSVP" asp-controller="home" asp-route-id="@wedding.WeddingId">
+                            <input type="submit" class="btn btn-success" value="RSVP">
+                        </form>
+                    }
+                    else
+                    {
+                        foreach(var rsvp in wedding.RSVPs)
+                        {
+                            if(rsvp.WeddingId == wedding.WeddingId && rsvp.UserId == ViewBag.UserId)
+                            {
+                                <form method="post" asp-action="RSVP" asp-controller="home" asp-route-id="@wedding.WeddingId">
+                                    <input type="submit" class="btn btn-primary" value="Un-RSVP">
+                                </form>
+                                break;
+                            }
+                            else
+                            {
+                                <form method="post" asp-action="RSVP" asp-controller="home" asp-route-id="@wedding.WeddingId">
+                                    <input type="submit" class="btn btn-success" value="RSVP">
+                                </form>
+                                break;
+                            }
+                        }
+                    }
+                }
                 </td>
             </tr>
             }

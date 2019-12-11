@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace wedding_planner.Migrations
 {
-    public partial class RSVPs : Migration
+    public partial class ModelsMig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -37,11 +37,18 @@ namespace wedding_planner.Migrations
                     Date = table.Column<DateTime>(nullable: false),
                     Address = table.Column<string>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
-                    UpdatedAt = table.Column<DateTime>(nullable: false)
+                    UpdatedAt = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Weddings", x => x.WeddingId);
+                    table.ForeignKey(
+                        name: "FK_Weddings_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -51,8 +58,7 @@ namespace wedding_planner.Migrations
                     RSVPId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     UserId = table.Column<int>(nullable: false),
-                    WeddingId = table.Column<int>(nullable: false),
-                    IsGoing = table.Column<bool>(nullable: false)
+                    WeddingId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -80,6 +86,11 @@ namespace wedding_planner.Migrations
                 name: "IX_RSVPs_WeddingId",
                 table: "RSVPs",
                 column: "WeddingId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Weddings_UserId",
+                table: "Weddings",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -88,10 +99,10 @@ namespace wedding_planner.Migrations
                 name: "RSVPs");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Weddings");
 
             migrationBuilder.DropTable(
-                name: "Weddings");
+                name: "Users");
         }
     }
 }

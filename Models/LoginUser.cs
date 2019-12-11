@@ -1,7 +1,9 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace wedding_planner.Models
 {
+    [NotMapped]
     public class LoginUser
     {
         [Display (Name="Email: ")]

@@ -1,4 +1,4 @@
-@model RSVP
+@model Wedding
 
 <div>
     <a asp-action="Dashboard" asp-controller="home">Dashboard</a>
@@ -6,9 +6,14 @@
 </div>
 
 <div>
-    <h1 class="display-4">@Model.Wedding.WedderOne & @Model.Wedding.WedderTwo's Wedding!</h1>
-    <p class="lead">Date: @Model.Wedding.Date.ToString("MM/dd/yyyy")</p>
+    <h1 class="display-4">@Model.WedderOne & @Model.WedderTwo's Wedding!</h1>
+    <p class="lead">Date: @Model.Date.ToString("MM/dd/yyyy")</p>
     <p class="lead">Guests:</p>
-
+    @foreach(var rsvp in Model.RSVPs)
+    {
+    <ul>
+        <li class="lead">@rsvp.Guest.firstName @rsvp.Guest.lastName</li>
+    </ul>
+    }
 </div>
 
